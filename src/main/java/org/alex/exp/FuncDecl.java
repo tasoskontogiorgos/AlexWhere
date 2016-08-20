@@ -1,6 +1,7 @@
 package org.alex.exp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,22 +26,31 @@ public class FuncDecl
 
     static
     {
-        Define( new FuncDecl( "BETWEEN",    Integer.class, Integer.class, Integer.class ));
-        Define( new FuncDecl( "EQUALS",     Integer.class, Integer.class, Integer.class ));
-        Define( new FuncDecl( "SUBSTR",     String.class, Integer.class, Integer.class ));
-        Define( new FuncDecl( "LIKE",       String.class, String.class ));
-        Define( new FuncDecl( "NOTLIKE",    String.class, String.class ));
-        Define( new FuncDecl( "IN",         String.class, Set.class ));
-        Define( new FuncDecl( "NOTIN",      String.class, Set.class ));
+        Define( new FuncDecl( Boolean.class, "BETWEEN",    Integer.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( Boolean.class, "EQUALS",     Integer.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( String.class,  "SUBSTR",     String.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( Boolean.class, "LIKE",       String.class, String.class ));
+        Define( new FuncDecl( Boolean.class, "NOTLIKE",    String.class, String.class ));
+        Define( new FuncDecl( Boolean.class, "IN",         String.class, Set.class ));
+        Define( new FuncDecl( Boolean.class, "NOTIN",      String.class, Set.class ));
+        Define( new FuncDecl( Set.class,     "SETOF",      List.class ));
     }
 
     private final String        m_name;
     private final Class[]       m_formalArgs;
+    private final Class         m_returnType;
 
-    public FuncDecl( String name, Class ... args )
+    public FuncDecl( Class ret, String name, Class ... args )
     {
         m_name = name;
         m_formalArgs = args;
+        m_returnType = ret;
+
+    }
+
+    public Class returnType()
+    {
+        return m_returnType;
     }
 
     public String getName()
