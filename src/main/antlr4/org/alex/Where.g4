@@ -6,9 +6,42 @@ wheres: where*;
 where: WHERE exp SEMI
 ;
 
-exp: IntegerLiteral;
+exp:
+
+        IntegerLiteral
+    |   StringLiteral
+    |   BooleanLiteral
+    |   Identifier
+    |   expList
+    |   funCall
+    |   exp compOper exp
+    |   exp logOper exp
+    |   exp BETWEEN exp ANDW exp
+    |   exp EQUALSW exp ORW exp
+    |   exp IN expList
+    |   exp NOT IN expList
+    |   exp LIKE expList
+    |   exp NOT LIKE expList
+
+    ;
 
 
+
+expList:
+        LPAREN exp ( COMMA exp ) * RPAREN
+    ;
+
+funCall:
+        Identifier expList
+    ;
+
+compOper:
+        LE | LT | GE | GT | EQUAL | NOTEQUAL
+     ;
+
+logOper:
+        AND | OR
+     ;
 
 
 // LEXER
@@ -16,7 +49,14 @@ exp: IntegerLiteral;
 // §3.9 Keywords
 
 
-WHERE         : 'WHERE';
+WHERE           : 'WHERE';
+BETWEEN         : 'BETWEEN';
+LIKE            : 'LIKE';
+NOT             : 'NOT';
+IN              : 'IN';
+ANDW            : 'AND';
+ORW             : 'OR';
+EQUALSW         : 'RQUALS';
 
 // §3.10.1 Integer Literals
 

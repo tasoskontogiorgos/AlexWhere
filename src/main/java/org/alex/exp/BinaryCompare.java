@@ -13,7 +13,7 @@ public class BinaryCompare extends Binary
     public enum Oper
     {
         LE,
-        LS,
+        LT,
         GT,
         GE,
         EQ,
@@ -59,7 +59,7 @@ public class BinaryCompare extends Binary
         int x = l.compareTo( r );
         switch( m_oper )
         {
-            case LS:
+            case LT:
             {
                 return x < 0;
             }

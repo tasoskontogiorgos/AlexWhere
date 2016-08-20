@@ -2,6 +2,7 @@ package org.alex.exp;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by tdk on 8/20/16.
@@ -24,11 +25,13 @@ public class FuncDecl
 
     static
     {
-        Define( new FuncDecl( "BETWEEN", Integer.class, Integer.class, Integer.class ));
-        Define( new FuncDecl( "EQUALS",  Integer.class, Integer.class, Integer.class ));
-        Define( new FuncDecl( "SUBSTR",  String.class, Integer.class, Integer.class ));
-        Define( new FuncDecl( "LIKE",  String.class, String.class ));
-        Define( new FuncDecl( "NOTLIKE",  String.class, String.class ));
+        Define( new FuncDecl( "BETWEEN",    Integer.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( "EQUALS",     Integer.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( "SUBSTR",     String.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( "LIKE",       String.class, String.class ));
+        Define( new FuncDecl( "NOTLIKE",    String.class, String.class ));
+        Define( new FuncDecl( "IN",         String.class, Set.class ));
+        Define( new FuncDecl( "NOTIN",      String.class, Set.class ));
     }
 
     private final String        m_name;
