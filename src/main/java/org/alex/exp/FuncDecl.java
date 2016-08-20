@@ -22,10 +22,19 @@ public class FuncDecl
     }
 
 
+    static
+    {
+        Define( new FuncDecl( "BETWEEN", Integer.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( "EQUALS",  Integer.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( "SUBSTR",  String.class, Integer.class, Integer.class ));
+        Define( new FuncDecl( "LIKE",  String.class, String.class ));
+        Define( new FuncDecl( "NOTLIKE",  String.class, String.class ));
+    }
+
     private final String        m_name;
     private final Class[]       m_formalArgs;
 
-    public FuncDecl( String name, Class[] args )
+    public FuncDecl( String name, Class ... args )
     {
         m_name = name;
         m_formalArgs = args;
