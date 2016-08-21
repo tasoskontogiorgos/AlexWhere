@@ -11,7 +11,7 @@ import java.util.Set;
 public class FuncDecl
 {
 
-    private static Map< String, FuncDecl >      s_all = new HashMap();
+    private static Map< String, FuncDecl >      s_all = new HashMap<>();
 
     private static void  Define( FuncDecl fd )
 
@@ -49,8 +49,8 @@ public class FuncDecl
             {
                 for( int i = 0; i<formals.length; i++ )
                 {
-                    Class f  = formals[ i ];
-                    Class a = actuals.get( i ).getType();
+                    Class<?> f  = formals[ i ];
+                    Class<?> a = actuals.get( i ).getType();
 
                     if( !f.isAssignableFrom( a))
                     {
@@ -83,6 +83,31 @@ public class FuncDecl
                 Integer c = ( Integer )args[ 2 ];
 
                 return a.equals(b) || a.equals( c );
+            }
+
+            case "SUBSTR":
+            {
+                String a =  ( String )args[ 0 ];
+                Integer b = ( Integer )args[ 1 ];
+                Integer c = ( Integer )args[ 2 ];
+
+                return a.substring( b, c );
+            }
+
+            case "IN":
+            {
+                String a =  ( String )args[ 0 ];
+                Set b =     ( Set )args[ 1 ];
+
+                return b.contains( a );
+            }
+
+            case "NOTIN":
+            {
+                String a =  ( String )args[ 0 ];
+                Set b =     ( Set )args[ 1 ];
+
+                return !b.contains( a );
             }
         }
 

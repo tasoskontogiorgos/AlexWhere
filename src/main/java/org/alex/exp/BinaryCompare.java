@@ -43,7 +43,9 @@ public class BinaryCompare extends Binary
         Class l = getLeft().getType();
         Class r = getRight().getType();
 
-        if( !( l.isAssignableFrom( Comparable.class ) && r.isAssignableFrom( Comparable.class )))
+        Class c = Comparable.class;
+
+        if( !( c.isAssignableFrom( l ) && c.isAssignableFrom( r )))
         {
             throw new RuntimeException( "Illegal types " + Util.At(getToken()));
         }

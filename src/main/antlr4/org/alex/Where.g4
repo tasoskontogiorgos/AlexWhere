@@ -12,16 +12,13 @@ exp:
     |   StringLiteral
     |   BooleanLiteral
     |   Identifier
-    |   expList
     |   funCall
     |   exp compOper exp
     |   exp logOper exp
     |   exp BETWEEN exp ANDW exp
     |   exp EQUALSW exp ORW exp
-    |   exp IN expList
-    |   exp NOT IN expList
-    |   exp LIKE expList
-    |   exp NOT LIKE expList
+    |   exp NOT? LIKE expList
+    |   exp NOT? IN expList
 
     ;
 
@@ -40,7 +37,7 @@ compOper:
      ;
 
 logOper:
-        AND | OR
+        AND | OR | ANDW | ORW
      ;
 
 

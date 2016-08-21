@@ -25,10 +25,17 @@ public class TestWhere extends TestCase
     }
     public static void test()
     {
-        assert( eval( "WHERE 1 EQUALS 1 OR 2;" ) );
+        assert(  eval( "WHERE 1 EQUALS 1 OR 2;" ) );
         assert( !eval( "WHERE 1 EQUALS 3 OR 2;" ) );
-        assert( eval( "WHERE testInt EQUALS 123 OR 2;" ) );
+        assert(  eval( "WHERE testInt EQUALS 123 OR 2;" ) );
         assert( !eval( "WHERE testInt EQUALS 22 OR 2;" ) );
+        assert(  eval( "WHERE testInt BETWEEN 1 AND 222;" ) );
+        assert( !eval( "WHERE testInt BETWEEN 1 AND 3;" ) );
+        assert(  eval( "WHERE testInt >= 123 && testInt <= 123;" ) );
+        assert(  eval( "WHERE testInt >= 123 AND testInt <= 123;" ) );
+        assert(  eval( "WHERE SUBSTR( testString, 1, 3) == \"bc\";" ) );
+        assert(  eval( "WHERE SUBSTR( testString, 1, 3) IN ( \"bc\" );" ) );
+        assert( !eval( "WHERE SUBSTR( testString, 1, 3) NOT IN ( \"bc\" );" ) );
 
     }
 }

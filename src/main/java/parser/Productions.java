@@ -30,6 +30,32 @@ public class Productions extends org.alex.WhereBaseVisitor< Void >
 
     Exp convert( WhereParser.ExpContext ctx )
     {
+        String s = ctx.getText();
+
+        if( ctx.IN() != null )
+        {
+            Exp a = convert( ctx.exp( 0 ));
+            Exp b = convertList( ctx.expList(  ));
+            String name = "IN";
+            if( ctx.NOT() != null )
+            {
+                name = "NOTIN";
+            }
+            return new FuncCall( ctx.start, name, a, b  );
+        }
+
+        if( ctx.LIKE() != null )
+        {
+            Exp a = convert( ctx.exp( 0 ));
+            Exp b = convertList( ctx.expList(  ));
+            String name = "LIKE";
+            if( ctx.NOT() != null )
+            {
+                name = "NOTLIKE";
+            }
+            return new FuncCall( ctx.start, name, a, b  );
+        }
+
         if( ctx.IntegerLiteral() != null )
         {
             String text = ctx.IntegerLiteral().getText();
@@ -46,6 +72,7 @@ public class Productions extends org.alex.WhereBaseVisitor< Void >
         if( ctx.StringLiteral() != null )
         {
             String text = ctx.StringLiteral().getText();
+            text = text.substring( 1, text.length() - 1 );
             return new Literal( ctx.start, text );
         }
 
@@ -53,12 +80,7 @@ public class Productions extends org.alex.WhereBaseVisitor< Void >
         {
             return new Var( ctx.start, ctx.Identifier().getText() );
         }
-        if( ctx.expList() != null )
-        {
-            Exp[] arr = convert( ctx.expList() );
 
-            return new ExpList( ctx.start, arr );
-        }
 
         if( ctx.funCall() != null )
         {
@@ -86,28 +108,15 @@ public class Productions extends org.alex.WhereBaseVisitor< Void >
             Exp c = convert( ctx.exp( 2 ));
             return new FuncCall( ctx.start, "EQUALS", a, b, c );
         }
-        if( ctx.LIKE() != null )
+
+
+        if( ctx.expList() != null )
         {
-            Exp a = convert( ctx.exp( 0 ));
-            Exp b = convert( ctx.exp( 1 ));
-            String name = "LIKE";
-            if( ctx.NOT() != null )
-            {
-                name = "NOTLIKE";
-            }
-            return new FuncCall( ctx.start, name, a, b  );
+            Exp[] arr = convert( ctx.expList() );
+
+            return new ExpList( ctx.start, arr );
         }
-        if( ctx.IN() != null )
-        {
-            Exp a = convert( ctx.exp( 0 ));
-            Exp b = convert( ctx.exp( 1 ));
-            String name = "IN";
-            if( ctx.NOT() != null )
-            {
-                name = "NOTIN";
-            }
-            return new FuncCall( ctx.start, name, a, b  );
-        }
+
         throw new RuntimeException( "Internal Error " + Util.At( ctx.start ));
     }
 
@@ -179,6 +188,18 @@ public class Productions extends org.alex.WhereBaseVisitor< Void >
         }
         return l;
     }
+
+    public Exp convertList(WhereParser.ExpListContext ctx)
+    {
+        int sz = ctx.exp().size();
+        Exp[] l = new Exp[ sz ];
+        for( int i = 0; i < sz; i++ )
+        {
+            l[ i ] = convert( ctx.exp( i ));
+        }
+        return new ExpList( ctx.start, l );
+    }
+
 
     public Exp convert(WhereParser.FunCallContext ctx)
     {
