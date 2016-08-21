@@ -36,6 +36,59 @@ public class FuncDecl
         Define( new FuncDecl( Set.class,     "SETOF",      List.class ));
     }
 
+
+    static Class Resolve( FuncCall fc )
+    {
+        String name = fc.getName();
+        if( s_all.containsKey( name ))
+        {
+            FuncDecl fd = s_all.get( name );
+            Class[] formals = fd.getFormalArguments();
+            List< Exp > actuals = fc.getAtuals();
+            if( formals.length == actuals.size() )
+            {
+                for( int i = 0; i<formals.length; i++ )
+                {
+                    Class f  = formals[ i ];
+                    Class a = actuals.get( i ).getType();
+
+                    if( !f.isAssignableFrom( a))
+                    {
+                        return null;
+                    }
+                }
+            }
+            return fd.returnType();
+        }
+        return null;
+    }
+
+    public static Object Eval( String name, Object[] args  )
+    {
+        switch( name )
+        {
+            case "BETWEEN":
+            {
+                Integer a = ( Integer )args[ 0 ];
+                Integer b = ( Integer )args[ 1 ];
+                Integer c = ( Integer )args[ 2 ];
+
+                return a >= b && a <= c;
+            }
+
+            case "EQUALS":
+            {
+                Integer a = ( Integer )args[ 0 ];
+                Integer b = ( Integer )args[ 1 ];
+                Integer c = ( Integer )args[ 2 ];
+
+                return a.equals(b) || a.equals( c );
+            }
+        }
+
+        throw new RuntimeException( "Can't execute " + name );
+    }
+
     private final String        m_name;
     private final Class[]       m_formalArgs;
     private final Class         m_returnType;

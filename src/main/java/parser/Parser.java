@@ -1,6 +1,7 @@
 package parser;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -18,16 +19,14 @@ import org.antlr.v4.runtime.tree.ParseTree;
  */
 public class Parser
 {
-    private static List<Exp> _Parse(String fileName ) throws Exception
+    private static List<Exp> _Parse(InputStream is ) throws Exception
     {
-        InputStream is = new FileInputStream( fileName );
 
         ANTLRInputStream input = new ANTLRInputStream( is );
         WhereLexer lexer = new WhereLexer( input );
         CommonTokenStream tokens = new CommonTokenStream( lexer );
         WhereParser parser = new WhereParser( tokens );
-        ParseTree tree = parser.wheres(); // parse; start at prog <label id="code.tour.main.6"/>
-        //System.out.println( tree.toStringTree( parser ) ); // print tree as text <label id="code.tour.main.7"/>
+        ParseTree tree = parser.wheres();
 
         Productions prod = new Productions();
 
@@ -39,7 +38,20 @@ public class Parser
     {
         try
         {
-            return _Parse( fileName );
+            InputStream is = new FileInputStream( fileName );
+            return _Parse( is );
+        } catch( Exception x )
+        {
+            throw new RuntimeException( x.getMessage() );
+        }
+    }
+
+    public static List<Exp>  ParseString( String str )
+    {
+        try
+        {
+            InputStream is = new ByteArrayInputStream(str.getBytes());
+            return _Parse( is );
         } catch( Exception x )
         {
             throw new RuntimeException( x.getMessage() );

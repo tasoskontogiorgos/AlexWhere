@@ -29,6 +29,10 @@ public class FuncCall extends Exp
     @Override
     public void resolve( ResolveContext ctx )
     {
+        for( Exp e : m_actuals )
+        {
+            e.resolve( ctx );
+        }
         m_type = ctx.resolve( this );
     }
 
@@ -53,6 +57,7 @@ public class FuncCall extends Exp
     {
         return m_actuals;
     }
+
 
     @Override
     public String toString()

@@ -56,7 +56,7 @@ NOT             : 'NOT';
 IN              : 'IN';
 ANDW            : 'AND';
 ORW             : 'OR';
-EQUALSW         : 'RQUALS';
+EQUALSW         : 'EQUALS';
 
 // §3.10.1 Integer Literals
 
