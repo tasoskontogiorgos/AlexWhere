@@ -21,7 +21,7 @@ public abstract class  Exp
     }
 
 
-    public abstract Class getType();
+    public abstract Class       getType();
 
     public abstract void        resolve( ResolveContext ctx );
     public abstract Object      eval( EvalContext ctx );

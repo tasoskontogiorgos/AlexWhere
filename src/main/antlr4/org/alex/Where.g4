@@ -9,6 +9,7 @@ where: WHERE exp SEMI
 exp:
 
         IntegerLiteral
+    |   FloatingPointLiteral
     |   StringLiteral
     |   BooleanLiteral
     |   Identifier

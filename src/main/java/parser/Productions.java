@@ -56,6 +56,12 @@ public class Productions extends org.alex.WhereBaseVisitor< Void >
             return new FuncCall( ctx.start, name, a, b  );
         }
 
+        if( ctx.FloatingPointLiteral() != null )
+        {
+            String text = ctx.FloatingPointLiteral().getText();
+            Double d = Double.parseDouble( text );
+            return new Literal( ctx.start, d );
+        }
         if( ctx.IntegerLiteral() != null )
         {
             String text = ctx.IntegerLiteral().getText();

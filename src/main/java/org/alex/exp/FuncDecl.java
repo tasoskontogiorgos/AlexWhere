@@ -14,7 +14,6 @@ public class FuncDecl
     private static Map< String, FuncDecl >      s_all = new HashMap<>();
 
     private static void  Define( FuncDecl fd )
-
     {
         if( s_all.containsKey( fd.getName() ))
         {
